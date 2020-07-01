@@ -1,41 +1,706 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to SOUSSI Hamza DEV Repo</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-            crossorigin="anonymous"></script>
+    <title>FET Prettifier</title>
+    <link rel="stylesheet" href="css/tailwind.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 
-<body>
-<nav class="navbar fixed fixed-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
-            </li>
-        </ul>
+<body class="bg-gray-200" style="height: 100%;">
+    <div class="container-fluid w-full h-full">
+        <div class="row h-100">
+            <div class="col-lg-3 col-md-3 col-sm-12 shadow-lg bg-indigo-500 h-full pb-2">
+                <div class="flex flex-wrap w-full justify-start">
+                    <div class="w-full flex flex-wrap justify-start mt-2 border-2 rounded-md border-indigo-700 p-2">
+                        <label class="font-bold w-full text-center">يرجى إختيار ملف CSV</label>
+                        <input type="file" name="filename" id="teachersList" accept=".csv" class="w-1/2 text-center">
+                        <div class="w-1/2 flex justify-center">
+                            <p id="notification" class="text-center text-yellow-500 px-2 font-bold"></p>
+                        </div>
+                        <select id="teacher_list" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                            <option selected disabled>الرجاء إختيار أستاذ</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-wrap w-full justify-start mt-2 rounded-md border-2 border-indigo-700">
+                        <label class="w-full text-center font-bold" for="">بداية الحصص المسائية</label>
+                        <select id="afternoonStart" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                            <option selected disabled>الرجاء إختيار توقيت بداية المساء</option>
+                            <option value="0">13:00</option>
+                            <option value="1">13:30</option>
+                            <option value="2">14:00</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-wrap w-full justify-start mt-2 rounded-md border-2 border-indigo-700">
+                        <label class="w-full text-center font-bold" for="">نرتيب الحصص</label>
+                        <select id="firstsession" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="secondsession" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="thirdsession" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="fourthsession" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                    </div>
+                    <div class="flex flex-wrap w-full justify-start mt-2 rounded-md border-2 border-indigo-700">
+                        <label class="w-full text-center font-bold" for="">نرتيب الفترات</label>
+                        <select id="day1" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day11" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day2" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day22" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day3" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day4" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day44" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day5" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                        <select id="day55" class="py-1 px-2 m-2 text-center w-full rounded-md">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 shadow-lg pt-4 w-full">
+                <div class="w-full flex flex-wrap justify-center">
+                    <div class="text-center flex justify-center w-full" id="selectedTable">
+                        <table id="mainTab"
+                            class="table table-striped table-bordered bg-white table-responsive-md text-wrap">
+                            <tbody>
+                                <tr class="text-black font-bold">
+                                    <td>
+                                        ح.س:<spane id="totalHours"></spane>سا
+                                    </td>
+                                    <td>08:00<br>09:00</td>
+                                    <td>09:00<br>10:00</td>
+                                    <td>10:00<br>11:00</td>
+                                    <td>11:00<br>12:00</td>
+                                    <td class="bg-green-500"></td>
+                                    <td id="afternoon0"></td>
+                                    <td id="afternoon1"></td>
+                                    <td id="afternoon2"></td>
+                                </tr>
+                                <tr class="text-black font-bold">
+                                    <td class=" align-middle">الأحد</td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="a"></spane><br>
+                                        <spane id="aa"></spane><br>
+                                        <spane id="aaa"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="z"></spane><br>
+                                        <spane id="zz"></spane><br>
+                                        <spane id="zzz"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="e"></spane><br>
+                                        <spane id="ee"></spane><br>
+                                        <spane id="eee"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="r"></spane><br>
+                                        <spane id="rr"></spane><br>
+                                        <spane id="rrr"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm bg-green-500">
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="t"></spane><br>
+                                        <spane id="tt"></spane><br>
+                                        <spane id="ttt"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="y"></spane><br>
+                                        <spane id="yy"></spane><br>
+                                        <spane id="yyy"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="u"></spane><br>
+                                        <spane id="uu"></spane><br>
+                                        <spane id="uuu"></spane>
+                                    </td>
+                                </tr>
+                                <tr class="text-black font-bold">
+                                    <td class=" align-middle">الإثنين</td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="i"></spane><br>
+                                        <spane id="ii"></spane><br>
+                                        <spane id="iii"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="o"></spane><br>
+                                        <spane id="oo"></spane><br>
+                                        <spane id="ooo"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="p"></spane><br>
+                                        <spane id="pp"></spane><br>
+                                        <spane id="ppp"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="q"></spane><br>
+                                        <spane id="qq"></spane><br>
+                                        <spane id="qqq"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm bg-green-500">
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="s"></spane><br>
+                                        <spane id="ss"></spane><br>
+                                        <spane id="sss"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="d"></spane><br>
+                                        <spane id="dd"></spane><br>
+                                        <spane id="ddd"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="f"></spane><br>
+                                        <spane id="ff"></spane><br>
+                                        <spane id="fff"></spane>
+                                    </td>
+                                </tr>
+                                <tr class="text-black font-bold">
+                                    <td class=" align-middle">الثلاثاء</td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="g"></spane><br>
+                                        <spane id="gg"></spane><br>
+                                        <spane id="ggg"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="h"></spane><br>
+                                        <spane id="hh"></spane><br>
+                                        <spane id="hhh"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="j"></spane><br>
+                                        <spane id="jj"></spane><br>
+                                        <spane id="jjj"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="k"></spane><br>
+                                        <spane id="kk"></spane><br>
+                                        <spane id="kkk"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm bg-green-500">
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="l"></spane><br>
+                                        <spane id="ll"></spane><br>
+                                        <spane id="lll"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="m"></spane><br>
+                                        <spane id="mm"></spane><br>
+                                        <spane id="mmm"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="w"></spane><br>
+                                        <spane id="ww"></spane><br>
+                                        <spane id="www"></spane>
+                                    </td>
+                                </tr>
+                                <tr class="text-black font-bold">
+                                    <td class=" align-middle">الأربعاء</td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="x"></spane><br>
+                                        <spane id="xx"></spane><br>
+                                        <spane id="xxx"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="c"></spane><br>
+                                        <spane id="cc"></spane><br>
+                                        <spane id="ccc"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="v"></spane><br>
+                                        <spane id="vv"></spane><br>
+                                        <spane id="vvv"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="b"></spane><br>
+                                        <spane id="bb"></spane><br>
+                                        <spane id="bbb"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm bg-green-500">
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="n"></spane><br>
+                                        <spane id="nn"></spane><br>
+                                        <spane id="nnn"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="az"></spane><br>
+                                        <spane id="aaz"></spane><br>
+                                        <spane id="aaaz"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="ze"></spane><br>
+                                        <spane id="zze"></spane><br>
+                                        <spane id="zzze"></spane>
+                                    </td>
+                                </tr>
+                                <tr class="text-black font-bold">
+                                    <td class=" align-middle">الخميس</td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="er"></spane><br>
+                                        <spane id="eer"></spane><br>
+                                        <spane id="eeer"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="rt"></spane><br>
+                                        <spane id="rrt"></spane><br>
+                                        <spane id="rrrt"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="ty"></spane><br>
+                                        <spane id="tty"></spane><br>
+                                        <spane id="ttty"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="yu"></spane><br>
+                                        <spane id="yyu"></spane><br>
+                                        <spane id="yyyu"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm bg-green-500">
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="ui"></spane><br>
+                                        <spane id="uui"></spane><br>
+                                        <spane id="uuui"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="io"></spane><br>
+                                        <spane id="iio"></spane><br>
+                                        <spane id="iiio"></spane>
+                                    </td>
+                                    <td class=" align-middle text-sm">
+                                        <spane id="op"></spane><br>
+                                        <spane id="oop"></spane><br>
+                                        <spane id="ooop"></spane>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            var data = [];
+            var sessionsData = [];
+            var daysData = [];
+            var teachers = [];
+            var afternoonTimes = [
+                ["13:00<br>14:00", "14:00<br>15:00", "15:00<br>16:00"],
+                ["13:30<br>14:30", "14:30<br>15:30", "15:30<br>16:30"],
+                ["14:00<br>15:00", "15:00<br>16:00", "16:00<br>17:00"],
+            ];
+
+            $("#teachersList").change(function (e) {
+                var ext = $("input#teachersList").val().split(".").pop().toLowerCase();
+                if ($.inArray(ext, ["csv"]) == -1) {
+                    alert('Upload CSV');
+                    return false;
+                }
+                if (e.target.files != undefined) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var lines = e.target.result.split('\n');
+                        data = [];
+                        sessionsData = [];
+                        daysData = [];
+                        teachers = [];
+                        for (i = 1; i < lines.length; ++i) {
+                            var line = lines[i].replace(/"/g, '');
+                            if (line.length > 0) {
+                                line = line.split(',');
+                                data.push(line);
+                                if (!sessionsData.includes(line[2])) {
+                                    sessionsData.push(line[2]);
+                                    $('#firstsession').append('<option value="' + line[2] + '">' + line[2] + '</option>');
+                                    $('#secondsession').append('<option value="' + line[2] + '">' + line[2] + '</option>');
+                                    $('#thirdsession').append('<option value="' + line[2] + '">' + line[2] + '</option>');
+                                    $('#fourthsession').append('<option value="' + line[2] + '">' + line[2] + '</option>');
+                                }
+                                if (!daysData.includes(line[1])) {
+                                    daysData.push(line[1]);
+                                }
+                                if (!teachers.includes(line[5])) {
+                                    teachers.push(line[5]);
+                                    $('#teacher_list').append('<option value="' + line[5] + '">' + line[5] + '</option>');
+                                }
+                            }
+                        }
+                        daysData.sort();
+                        daysData.forEach(element => {
+                            $('#day1').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day11').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day2').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day22').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day3').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day4').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day44').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day5').append('<option value="' + element + '">' + element + '</option>');
+                            $('#day55').append('<option value="' + element + '">' + element + '</option>');
+                        });
+                        $('#notification').html('تم تحميل الجداول بنجاح')
+                    };
+                    reader.readAsText(e.target.files.item(0));
+                }
+                return false;
+            });
+
+            $("#afternoonStart").change(function () {
+                $("#afternoonStart option:selected").each(function () {
+                    var afternoon = $(this).val();
+                    switch (afternoon) {
+                        case "0":
+                            {
+                                $('#afternoon0').html(afternoonTimes[0][0]);
+                                $('#afternoon1').html(afternoonTimes[0][1]);
+                                $('#afternoon2').html(afternoonTimes[0][2]);
+                            }
+                            break;
+                        case "1":
+                            {
+                                $('#afternoon0').html(afternoonTimes[1][0]);
+                                $('#afternoon1').html(afternoonTimes[1][1]);
+                                $('#afternoon2').html(afternoonTimes[1][2]);
+                            }
+                            break;
+                        case "2":
+                            {
+                                $('#afternoon0').html(afternoonTimes[2][0]);
+                                $('#afternoon1').html(afternoonTimes[2][1]);
+                                $('#afternoon2').html(afternoonTimes[2][2]);
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                })
+            });
+
+            var teacherTimeTable = [];
+            $("#teacher_list").change(function () {
+                $("#teacher_list option:selected").each(function () {
+                    var teacher = $(this).text();
+                    $('#dataHodler').html('');
+                    var teacherTimeTable = [];
+                    data.forEach(elem => {
+                        if (elem[5] == teacher) {
+                            teacherTimeTable.push(elem);
+                        }
+                    });
+                    $('#totalHours').text(teacherTimeTable.length)
+
+                    $('#mainTab').find('spane').each(function () {
+                        $(this).text('');
+                    });
+                    teacherTimeTable.forEach(element => {
+                        switch (element[1]) {
+                            // الفترة الأولى
+                            case $("#day1 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#a').text(element[3]);
+                                        $('#aa').text(element[4]);
+                                        $('#aaa').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#z').text(element[3]);
+                                        $('#zz').text(element[4]);
+                                        $('#zzz').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#e').text(element[3]);
+                                        $('#ee').text(element[4]);
+                                        $('#eee').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#r').text(element[3]);
+                                        $('#rr').text(element[4]);
+                                        $('#rrr').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة الثانية
+                            case $("#day11 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#t').text(element[3]);
+                                        $('#tt').text(element[4]);
+                                        $('#ttt').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#y').text(element[3]);
+                                        $('#yy').text(element[4]);
+                                        $('#yyy').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#u').text(element[3]);
+                                        $('#uu').text(element[4]);
+                                        $('#uuu').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            // الفترة الثالثة
+                            case $("#day2 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#i').text(element[3]);
+                                        $('#ii').text(element[4]);
+                                        $('#iii').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#o').text(element[3]);
+                                        $('#oo').text(element[4]);
+                                        $('#ooo').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#p').text(element[3]);
+                                        $('#pp').text(element[4]);
+                                        $('#ppp').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#q').text(element[3]);
+                                        $('#qq').text(element[4]);
+                                        $('#qqq').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة الرابعة
+                            case $("#day22 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#s').text(element[3]);
+                                        $('#ss').text(element[4]);
+                                        $('#sss').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#d').text(element[3]);
+                                        $('#dd').text(element[4]);
+                                        $('#ddd').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#f').text(element[3]);
+                                        $('#ff').text(element[4]);
+                                        $('#fff').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            // الفترة الخامسة
+                            case $("#day3 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#g').text(element[3]);
+                                        $('#gg').text(element[4]);
+                                        $('#ggg').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#h').text(element[3]);
+                                        $('#hh').text(element[4]);
+                                        $('#hhh').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#j').text(element[3]);
+                                        $('#jj').text(element[4]);
+                                        $('#jjj').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#k').text(element[3]);
+                                        $('#kk').text(element[4]);
+                                        $('#kkk').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            // الفترة السابعة
+                            case $("#day4 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#x').text(element[3]);
+                                        $('#xx').text(element[4]);
+                                        $('#xxx').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#c').text(element[3]);
+                                        $('#cc').text(element[4]);
+                                        $('#ccc').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#v').text(element[3]);
+                                        $('#vv').text(element[4]);
+                                        $('#vvv').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#b').text(element[3]);
+                                        $('#bb').text(element[4]);
+                                        $('#bbb').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة الثامنة
+                            case $("#day44 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#n').text(element[3]);
+                                        $('#nn').text(element[4]);
+                                        $('#nnn').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#az').text(element[3]);
+                                        $('#aaz').text(element[4]);
+                                        $('#aaaz').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#ze').text(element[3]);
+                                        $('#zze').text(element[4]);
+                                        $('#zzze').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة التاسعة
+                            case $("#day5 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#er').text(element[3]);
+                                        $('#eer').text(element[4]);
+                                        $('#eeer').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#rt').text(element[3]);
+                                        $('#rrt').text(element[4]);
+                                        $('#rrrt').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#ty').text(element[3]);
+                                        $('#tty').text(element[4]);
+                                        $('#ttty').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#yu').text(element[3]);
+                                        $('#yyu').text(element[4]);
+                                        $('#yyyu').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة العاشرة
+                            case $("#day55 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#ui').text(element[3]);
+                                        $('#uui').text(element[4]);
+                                        $('#uuui').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#io').text(element[3]);
+                                        $('#iio').text(element[4]);
+                                        $('#iiio').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#op').text(element[3]);
+                                        $('#oop').text(element[4]);
+                                        $('#ooop').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    });
+
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
