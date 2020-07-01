@@ -407,11 +407,11 @@
                             teacherTimeTable.push(elem);
                         }
                     });
-                    $('#totalHours').text(teacherTimeTable.length)
 
                     $('#mainTab').find('spane').each(function () {
                         $(this).text('');
                     });
+                    $('#totalHours').text(teacherTimeTable.length)
                     teacherTimeTable.forEach(element => {
                         switch (element[1]) {
                             // الفترة الأولى
