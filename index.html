@@ -70,12 +70,34 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 col-sm-12 shadow-lg pt-4 w-full">
+            <div class="col-lg-9 col-md-9 col-sm-12 shadow-lg w-full">
                 <div class="w-full flex flex-wrap justify-center">
+                    <div class="w-full flex flex-wrap justify-end p-2 mb-2">
+                        <button id="createAllTablesButton"
+                            class="shadow-lg btn-block px-2 py-2 bg-green-500 text-white font-bold hover:bg-green-600">إنجاز
+                            كل التواقيت
+                            الأسبوعية الخاصة
+                            بالأساتذة</button>
+                    </div>
                     <div class="text-center flex justify-center w-full" id="selectedTable">
                         <table id="mainTab"
                             class="table table-striped table-bordered bg-white table-responsive-md text-wrap">
                             <tbody>
+                                <tr>
+                                    <td colspan="9" class="text-center font-bold text-xl">
+                                        التوقيت الأسبوعي للأستاذ(ة) الفاضل(ة): <span id="teachername"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1"></td>
+                                    <td colspan="4" class="text-center font-bold">
+                                        الفترة الصباحية
+                                    </td>
+                                    <td colspan="1"></td>
+                                    <td colspan="3" class="text-center font-bold">
+                                        الفترة المسائية
+                                    </td>
+                                </tr>
                                 <tr class="text-black font-bold">
                                     <td>
                                         ح.س:<spane id="totalHours"></spane>سا
@@ -292,6 +314,10 @@
                             </tbody>
                         </table>
                     </div>
+                    <hr>
+                    <div class="flex flex-wrap w-full text-center" id="allTables">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -396,10 +422,13 @@
                 })
             });
 
-            var teacherTimeTable = [];
-            $("#teacher_list").change(function () {
-                $("#teacher_list option:selected").each(function () {
-                    var teacher = $(this).text();
+            $('#createAllTablesButton').on('click', function () {
+                createAllTimeTables();
+            });
+            function createAllTimeTables() {
+                var tables = [];
+                teachers.forEach(teacher => {
+                    var teacherTimeTable = [];
                     $('#dataHodler').html('');
                     var teacherTimeTable = [];
                     data.forEach(elem => {
@@ -411,6 +440,7 @@
                     $('#mainTab').find('spane').each(function () {
                         $(this).text('');
                     });
+                    $('#teachername').text(teacher)
                     $('#totalHours').text(teacherTimeTable.length)
                     teacherTimeTable.forEach(element => {
                         switch (element[1]) {
@@ -697,6 +727,330 @@
                         }
                     });
 
+                    $('#mainTab').find('spane').each(function () {
+                        if ($(this).is(':empty')) {
+                            $(this).closest("td").addClass('bg-gray-400');
+                        } else {
+                            $(this).closest("td").removeClass('bg-gray-400');
+                        }
+                    });
+                    tables.push($('#mainTab').clone(true))
+                });
+                $('#allTables').html('');
+                tables.forEach(table => {
+                    $('#allTables').append(table);
+                });
+            }
+
+            var teacherTimeTable = [];
+            $("#teacher_list").change(function () {
+                $("#teacher_list option:selected").each(function () {
+                    var teacher = $(this).text();
+                    $('#dataHodler').html('');
+                    var teacherTimeTable = [];
+                    data.forEach(elem => {
+                        if (elem[5] == teacher) {
+                            teacherTimeTable.push(elem);
+                        }
+                    });
+
+                    $('#mainTab').find('spane').each(function () {
+                        $(this).text('');
+                    });
+                    $('#teachername').text(teacher)
+                    $('#totalHours').text(teacherTimeTable.length)
+                    teacherTimeTable.forEach(element => {
+                        switch (element[1]) {
+                            // الفترة الأولى
+                            case $("#day1 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#a').text(element[3]);
+                                        $('#aa').text(element[4]);
+                                        $('#aaa').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#z').text(element[3]);
+                                        $('#zz').text(element[4]);
+                                        $('#zzz').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#e').text(element[3]);
+                                        $('#ee').text(element[4]);
+                                        $('#eee').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#r').text(element[3]);
+                                        $('#rr').text(element[4]);
+                                        $('#rrr').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة الثانية
+                            case $("#day11 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#t').text(element[3]);
+                                        $('#tt').text(element[4]);
+                                        $('#ttt').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#y').text(element[3]);
+                                        $('#yy').text(element[4]);
+                                        $('#yyy').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#u').text(element[3]);
+                                        $('#uu').text(element[4]);
+                                        $('#uuu').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            // الفترة الثالثة
+                            case $("#day2 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#i').text(element[3]);
+                                        $('#ii').text(element[4]);
+                                        $('#iii').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#o').text(element[3]);
+                                        $('#oo').text(element[4]);
+                                        $('#ooo').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#p').text(element[3]);
+                                        $('#pp').text(element[4]);
+                                        $('#ppp').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#q').text(element[3]);
+                                        $('#qq').text(element[4]);
+                                        $('#qqq').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة الرابعة
+                            case $("#day22 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#s').text(element[3]);
+                                        $('#ss').text(element[4]);
+                                        $('#sss').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#d').text(element[3]);
+                                        $('#dd').text(element[4]);
+                                        $('#ddd').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#f').text(element[3]);
+                                        $('#ff').text(element[4]);
+                                        $('#fff').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            // الفترة الخامسة
+                            case $("#day3 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#g').text(element[3]);
+                                        $('#gg').text(element[4]);
+                                        $('#ggg').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#h').text(element[3]);
+                                        $('#hh').text(element[4]);
+                                        $('#hhh').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#j').text(element[3]);
+                                        $('#jj').text(element[4]);
+                                        $('#jjj').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#k').text(element[3]);
+                                        $('#kk').text(element[4]);
+                                        $('#kkk').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            // الفترة السابعة
+                            case $("#day4 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#x').text(element[3]);
+                                        $('#xx').text(element[4]);
+                                        $('#xxx').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#c').text(element[3]);
+                                        $('#cc').text(element[4]);
+                                        $('#ccc').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#v').text(element[3]);
+                                        $('#vv').text(element[4]);
+                                        $('#vvv').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#b').text(element[3]);
+                                        $('#bb').text(element[4]);
+                                        $('#bbb').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة الثامنة
+                            case $("#day44 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#n').text(element[3]);
+                                        $('#nn').text(element[4]);
+                                        $('#nnn').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#az').text(element[3]);
+                                        $('#aaz').text(element[4]);
+                                        $('#aaaz').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#ze').text(element[3]);
+                                        $('#zze').text(element[4]);
+                                        $('#zzze').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة التاسعة
+                            case $("#day5 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#er').text(element[3]);
+                                        $('#eer').text(element[4]);
+                                        $('#eeer').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#rt').text(element[3]);
+                                        $('#rrt').text(element[4]);
+                                        $('#rrrt').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#ty').text(element[3]);
+                                        $('#tty').text(element[4]);
+                                        $('#ttty').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#fourthsession option:selected").val(): {
+                                        $('#yu').text(element[3]);
+                                        $('#yyu').text(element[4]);
+                                        $('#yyyu').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+
+                            // الفترة العاشرة
+                            case $("#day55 option:selected").val():
+                                switch (element[2]) {
+                                    case $("#firstsession option:selected").val(): {
+                                        $('#ui').text(element[3]);
+                                        $('#uui').text(element[4]);
+                                        $('#uuui').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#secondsession option:selected").val(): {
+                                        $('#io').text(element[3]);
+                                        $('#iio').text(element[4]);
+                                        $('#iiio').text('ق: ' + element[7]);
+                                    }
+                                        break;
+                                    case $("#thirdsession option:selected").val(): {
+                                        $('#op').text(element[3]);
+                                        $('#oop').text(element[4]);
+                                        $('#ooop').text('ق: ' + element[7]);
+                                    }
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                break;
+
+                            default:
+                                break;
+                        }
+                    });
+
+                    $('#mainTab').find('spane').each(function () {
+                        if ($(this).is(':empty')) {
+                            $(this).closest("td").addClass('bg-gray-400');
+                        } else {
+                            $(this).closest("td").removeClass('bg-gray-400');
+                        }
+                    });
                 });
             });
         });
