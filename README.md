@@ -6,7 +6,3 @@
 [![Visit the facebook profile]https://icons.iconarchive.com/icons/graphics-vibe/simple-rounded-social/48/facebook-icon.png)](https://www.facebook.com/FeelbadSoussiWolfgun/)
 [![Visit the instagram profile]https://icons.iconarchive.com/icons/designbolts/free-instagram/48/Active-Instagram-3-icon.png)](https://www.instagram.com/feelbaddz/)
 [![Visit the twitter profile]https://icons.iconarchive.com/icons/graphics-vibe/simple-rounded-social/48/twitter-icon.png)](https://twitter.com/Feelbad_Wolfgun/)
-
-## Donations (Optional)
-
-- You could include a <a href="https://icons.iconarchive.com/icons/double-j-design/origami-colored-pencil/256/blue-home-icon.png" target="_blank">Gratipay</a> link as well.
