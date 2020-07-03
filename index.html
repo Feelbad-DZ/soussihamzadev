@@ -4,15 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FET Prettifier</title>
+    <title>FET Prettifier by: SOUSSI Hamza</title>
     <link rel="stylesheet" href="css/tailwind.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
 
     <style type="text/css">
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        th,
+        td {
+            padding: 1px;
+        }
+
         @media print {
             @page {
                 size: A4;
@@ -36,13 +46,27 @@
 <body class="bg-gray-200" style="height: 100%;">
     <div class="container-fluid w-full h-full">
         <div class="row h-100">
-            <div class="col-lg-3 col-md-3 col-sm-12 shadow-lg bg-indigo-500 h-full pb-2 noprint">
+            <div class="col-lg-3 col-md-3 col-sm-12 shadow-lg bg-indigo-500 pb-2 noprint sticky-top overflow-y-scroll"
+                style="height: 100vh;">
                 <div class="flex flex-wrap w-full justify-start">
                     <div class="w-full flex flex-wrap justify-start mt-2 border-2 rounded-md border-indigo-700 p-2">
                         <label class="font-bold w-full text-center">يرجى إختيار ملف CSV</label>
                         <input type="file" name="filename" id="teachersList" accept=".csv" class="w-1/2 text-center">
                         <div class="w-1/2 flex justify-center">
                             <p id="notification" class="text-center text-yellow-500 px-2 font-bold"></p>
+                        </div>
+                        <input id="directionEdu" type="text" class="w-full py-1 px-2 text-center m-1"
+                            placeholder="مديرية التربية">
+                        <input id="CEMName" type="text" class="w-full py-1 px-2 text-center m-1" placeholder="المتوسطة">
+                        <div class="w-full flex flex-wrap justify-end p-2 mb-2 noprint">
+                            <button id="createAllTablesButton"
+                                class="shadow-lg w-1/2 px-2 py-2 bg-green-500 text-white font-bold hover:bg-green-600">إنجاز
+                                التواقيت
+                            </button>
+                            <button id="printAllTimeTables"
+                                class="shadow-lg  w-1/2 px-2 py-2 bg-blue-500 text-white font-bold hover:bg-blue-600">
+                                طباعة
+                            </button>
                         </div>
                         <select id="teacher_list" class="py-1 px-2 m-2 text-center w-full rounded-md">
                             <option selected disabled>الرجاء إختيار أستاذ</option>
@@ -93,28 +117,41 @@
             </div>
             <div class="col-lg-9 col-md-9 col-sm-12 w-full">
                 <div class="w-full flex flex-wrap justify-center">
-                    <div class="w-full flex flex-wrap justify-end p-2 mb-2 noprint">
-                        <button id="createAllTablesButton"
-                            class="shadow-lg w-1/2 px-2 py-2 bg-green-500 text-white font-bold hover:bg-green-600">إنجاز
-                            كل التواقيت
-                            الأسبوعية الخاصة
-                            بالأساتذة</button>
-                        <button id="printAllTimeTables"
-                            class="shadow-lg  w-1/2 px-2 py-2 bg-blue-500 text-white font-bold hover:bg-blue-600">
-                            طباعة التواقيت الأسبوعية
-                        </button>
-                    </div>
                     <div class="text-center flex justify-center w-full noprint hidden" id="selectedTable">
-                        <div id="tableContainer" class="w-full report">
-                            <table id="mainTab" class=" table table-striped table-bordered bg-white w-full text-wrap">
+                        <div id="tableContainer" class="w-full report border-2 border-black px-4 py-2">
+                            <div></div>
+                            <div class="w-full flex flex-wrap">
+                                <label class="w-1/2 text-center font-extrabold" for="">
+                                    الجمهورية الجزائرية الديمقراطية الشعبية
+                                </label>
+                                <label class="w-1/2 text-center font-extrabold" for="">
+                                    وزارة التربية الوطنية
+                                </label>
+                                <label class="w-1/2 text-center font-extrabold" for="">
+                                    مديرية التربية لولاية: <span id="directionEducation"></span>
+                                </label>
+                                <label class="w-1/2 text-center font-extrabold" for="">
+                                    متوسطة: <span id="CEM"></span>
+                                </label>
+                            </div>
+                            <table id="mainTab"
+                                class="table table-striped table-bordered bg-white w-full text-wrap text-sm">
                                 <tbody>
                                     <tr>
-                                        <td colspan="9" class="text-center font-bold text-xl">
-                                            التوقيت الأسبوعي للأستاذ(ة) الفاضل(ة): <span id="teachername"></span>
+                                        <td colspan="2" class="text-center font-bold">
+                                            الموضوع: التوقيت الأسبوعي
+                                        </td>
+                                        <td colspan="2" class="text-center font-bold">
+                                            من مدير المتوسطة إلى:
+                                        </td>
+                                        <td colspan="5" class="text-center font-bold">
+                                            الأستاذ(ة) الفاضل(ة): <span id="teachername"></span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="1"></td>
+                                        <td rowspan="2" class="text-base text-center align-middle font-bold">
+                                            <spane id="totalHours"></spane>سا
+                                        </td>
                                         <td colspan="4" class="text-center font-bold">
                                             الفترة الصباحية
                                         </td>
@@ -124,9 +161,6 @@
                                         </td>
                                     </tr>
                                     <tr class="text-black font-bold">
-                                        <td>
-                                            ح.س:<spane id="totalHours"></spane>سا
-                                        </td>
                                         <td>08:00<br>09:00</td>
                                         <td>09:00<br>10:00</td>
                                         <td>10:00<br>11:00</td>
@@ -338,6 +372,16 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <table class="table bg-white w-full text-wrap text-sm">
+                                <tr>
+                                    <td class="text-right">
+                                        إمضاء الأستاذ:
+                                    </td>
+                                    <td class="text-right">
+                                        إمضاء المدير:
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -466,7 +510,11 @@
                     $('#mainTab').find('spane').each(function () {
                         $(this).text('');
                     });
-                    $('#teachername').text(teacher)
+
+                    $('#tableContainer div').first().attr('id', teacher);
+                    $('#directionEducation').text(document.getElementById("directionEdu").value)
+                    $('#CEM').text(document.getElementById("CEMName").value)
+                    $('#teachername').text(teacher);
                     $('#totalHours').text(teacherTimeTable.length)
                     teacherTimeTable.forEach(element => {
                         switch (element[1]) {
@@ -755,7 +803,7 @@
 
                     $('#mainTab').find('spane').each(function () {
                         if ($(this).is(':empty')) {
-                            $(this).text('➖');
+                            $(this).text('X');
                         }
                     });
                     tables.push($('#tableContainer').clone(true))
@@ -768,312 +816,11 @@
 
             var teacherTimeTable = [];
             $("#teacher_list").change(function () {
-                $("#teacher_list option:selected").each(function () {
-                    var teacher = $(this).text();
-                    $('#dataHodler').html('');
-                    var teacherTimeTable = [];
-                    data.forEach(elem => {
-                        if (elem[5] == teacher) {
-                            teacherTimeTable.push(elem);
-                        }
-                    });
-
-                    $('#mainTab').find('spane').each(function () {
-                        $(this).text('');
-                    });
-                    $('#teachername').text(teacher)
-                    $('#totalHours').text(teacherTimeTable.length)
-                    teacherTimeTable.forEach(element => {
-                        switch (element[1]) {
-                            // الفترة الأولى
-                            case $("#day1 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#a').text(element[3]);
-                                        $('#aa').text(element[4]);
-                                        $('#aaa').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#z').text(element[3]);
-                                        $('#zz').text(element[4]);
-                                        $('#zzz').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#e').text(element[3]);
-                                        $('#ee').text(element[4]);
-                                        $('#eee').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#fourthsession option:selected").val(): {
-                                        $('#r').text(element[3]);
-                                        $('#rr').text(element[4]);
-                                        $('#rrr').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-
-                            // الفترة الثانية
-                            case $("#day11 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#t').text(element[3]);
-                                        $('#tt').text(element[4]);
-                                        $('#ttt').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#y').text(element[3]);
-                                        $('#yy').text(element[4]);
-                                        $('#yyy').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#u').text(element[3]);
-                                        $('#uu').text(element[4]);
-                                        $('#uuu').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-                            // الفترة الثالثة
-                            case $("#day2 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#i').text(element[3]);
-                                        $('#ii').text(element[4]);
-                                        $('#iii').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#o').text(element[3]);
-                                        $('#oo').text(element[4]);
-                                        $('#ooo').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#p').text(element[3]);
-                                        $('#pp').text(element[4]);
-                                        $('#ppp').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#fourthsession option:selected").val(): {
-                                        $('#q').text(element[3]);
-                                        $('#qq').text(element[4]);
-                                        $('#qqq').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-
-                            // الفترة الرابعة
-                            case $("#day22 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#s').text(element[3]);
-                                        $('#ss').text(element[4]);
-                                        $('#sss').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#d').text(element[3]);
-                                        $('#dd').text(element[4]);
-                                        $('#ddd').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#f').text(element[3]);
-                                        $('#ff').text(element[4]);
-                                        $('#fff').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-                            // الفترة الخامسة
-                            case $("#day3 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#g').text(element[3]);
-                                        $('#gg').text(element[4]);
-                                        $('#ggg').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#h').text(element[3]);
-                                        $('#hh').text(element[4]);
-                                        $('#hhh').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#j').text(element[3]);
-                                        $('#jj').text(element[4]);
-                                        $('#jjj').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#fourthsession option:selected").val(): {
-                                        $('#k').text(element[3]);
-                                        $('#kk').text(element[4]);
-                                        $('#kkk').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-                            // الفترة السابعة
-                            case $("#day4 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#x').text(element[3]);
-                                        $('#xx').text(element[4]);
-                                        $('#xxx').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#c').text(element[3]);
-                                        $('#cc').text(element[4]);
-                                        $('#ccc').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#v').text(element[3]);
-                                        $('#vv').text(element[4]);
-                                        $('#vvv').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#fourthsession option:selected").val(): {
-                                        $('#b').text(element[3]);
-                                        $('#bb').text(element[4]);
-                                        $('#bbb').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-
-                            // الفترة الثامنة
-                            case $("#day44 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#n').text(element[3]);
-                                        $('#nn').text(element[4]);
-                                        $('#nnn').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#az').text(element[3]);
-                                        $('#aaz').text(element[4]);
-                                        $('#aaaz').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#ze').text(element[3]);
-                                        $('#zze').text(element[4]);
-                                        $('#zzze').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-
-                            // الفترة التاسعة
-                            case $("#day5 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#er').text(element[3]);
-                                        $('#eer').text(element[4]);
-                                        $('#eeer').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#rt').text(element[3]);
-                                        $('#rrt').text(element[4]);
-                                        $('#rrrt').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#ty').text(element[3]);
-                                        $('#tty').text(element[4]);
-                                        $('#ttty').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#fourthsession option:selected").val(): {
-                                        $('#yu').text(element[3]);
-                                        $('#yyu').text(element[4]);
-                                        $('#yyyu').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-
-                            // الفترة العاشرة
-                            case $("#day55 option:selected").val():
-                                switch (element[2]) {
-                                    case $("#firstsession option:selected").val(): {
-                                        $('#ui').text(element[3]);
-                                        $('#uui').text(element[4]);
-                                        $('#uuui').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#secondsession option:selected").val(): {
-                                        $('#io').text(element[3]);
-                                        $('#iio').text(element[4]);
-                                        $('#iiio').text('ق: ' + element[7]);
-                                    }
-                                        break;
-                                    case $("#thirdsession option:selected").val(): {
-                                        $('#op').text(element[3]);
-                                        $('#oop').text(element[4]);
-                                        $('#ooop').text('ق: ' + element[7]);
-                                    }
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                                break;
-
-                            default:
-                                break;
-                        }
-                    });
-
-                    $('#mainTab').find('spane').each(function () {
-                        if ($(this).is(':empty')) {
-                            $(this).text('x');
-                        }
-                    });
-                });
+                var e = document.getElementById("teacher_list");
+                var strUser = e.options[e.selectedIndex].value;
+                document
+                    .getElementById(strUser)
+                    .scrollIntoView(true);
             });
 
 
